@@ -20,6 +20,8 @@ export async function getServerSideProps() {
   const data = {
     twitterClientId: process.env.TWITTER_CLIENT_ID,
     twitterClientSecret: process.env.TWITTER_CLIENT_SECRET,
+    redditClientId: process.env.REDDIT_CLIENT_ID,
+    redditClientSecret: process.env.REDDIT_CLIENT_SECRET,
     redirectUri: process.env.REDIRECT_URI,
   };
 
