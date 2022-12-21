@@ -1,5 +1,5 @@
-const Home = () => {
+const HomeNoAuth = () => {
   return <div>Welcome to Social Media Manager</div>;
 };
 
-export default Home;
+export default HomeNoAuth;

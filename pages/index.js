@@ -1,8 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
-import Home from "../components/home";
-
-import Networks from "../components/networks";
+import HomeAuth from "../components/home-auth";
+import HomeNoAuth from "../components/home-no-auth";
 
 const Index = ({ data }) => {
   const { data: session, status } = useSession();
@@ -11,7 +10,7 @@ const Index = ({ data }) => {
     return <CircularProgress />;
   }
 
-  return session ? <Networks credentials={data} /> : <Home />;
+  return session ? <HomeAuth credentials={data} /> : <HomeNoAuth />;
 };
 
 export default Index;
@@ -23,6 +22,8 @@ export async function getServerSideProps() {
     redditClientId: process.env.REDDIT_CLIENT_ID,
     redditClientSecret: process.env.REDDIT_CLIENT_SECRET,
     redirectUri: process.env.REDIRECT_URI,
+    linkedinClientId: process.env.LINKEDIN_CLIENT_ID,
+    linkedinClientSecret: process.env.LINKEDIN_CLIENT_SECRET,
   };
 
   return {
