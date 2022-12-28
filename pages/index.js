@@ -2,6 +2,7 @@ import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import HomeAuth from "../components/home-auth";
 import HomeNoAuth from "../components/home-no-auth";
+import { CredentialsContext } from "../context";
 
 const Index = ({ data }) => {
   const { data: session, status } = useSession();
@@ -10,7 +11,13 @@ const Index = ({ data }) => {
     return <CircularProgress />;
   }
 
-  return session ? <HomeAuth credentials={data} /> : <HomeNoAuth />;
+  return session ? (
+    <CredentialsContext.Provider value={data}>
+      <HomeAuth />
+    </CredentialsContext.Provider>
+  ) : (
+    <HomeNoAuth />
+  );
 };
 
 export default Index;

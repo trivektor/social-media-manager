@@ -1,26 +1,32 @@
 import dbConnect from "../../../../lib/db-connect";
-import axios from "axios";
 import { Network } from "../../../../models";
 import { getSession } from "next-auth/react";
+import axios from "axios";
 
 export default async function handler(req, res) {
-  const { code, state } = req.query;
+  await dbConnect();
+
+  const session = await getSession({ req });
+
+  const network = await Network.findOne({
+    createdBy: session.user.email,
+    name: "LinkedIn",
+  });
+
   const basicAuthToken = Buffer.from(
     [process.env.LINKEDIN_CLIENT_ID, process.env.LINKEDIN_CLIENT_SECRET].join(
       ":"
     ),
     "utf8"
   ).toString("base64");
-  const {
-    data: { access_token },
-  } = await axios.post(
-    "https://www.linkedin.com/oauth/v2/accessToken",
+
+  https: await axios.post(
+    "https://www.linkedin.com/oauth/v2/revoke",
     new URLSearchParams({
-      grant_type: "authorization_code",
+      token: network.accessToken,
+      token_type_hint: "access_token",
       client_id: process.env.LINKEDIN_CLIENT_ID,
       client_secret: process.env.LINKEDIN_CLIENT_SECRET,
-      redirect_uri: `${process.env.REDIRECT_URI}/api/auth/callback/linkedin`,
-      code,
     }),
     {
       headers: {
@@ -30,15 +36,10 @@ export default async function handler(req, res) {
     }
   );
 
-  await dbConnect();
-
-  const session = await getSession({ req });
-
-  await Network.create({
-    name: "LinkedIn",
-    accessToken: access_token,
+  await Network.deleteOne({
     createdBy: session.user.email,
+    name: "LinkedIn",
   });
 
-  res.redirect(process.env.REDIRECT_URI);
+  res.json({});
 }

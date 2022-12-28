@@ -1,7 +1,12 @@
 import Networks from "../../components/networks";
+import { CredentialsContext } from "../../context";
 
 const Index = ({ data }) => {
-  return <Networks credentials={data} />;
+  return (
+    <CredentialsContext.Provider value={data}>
+      <Networks />
+    </CredentialsContext.Provider>
+  );
 };
 
 Index.auth = true;

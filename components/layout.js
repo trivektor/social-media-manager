@@ -5,21 +5,23 @@ import {
   AppBar as MuiAppBar,
   Box,
   Toolbar,
-  Button,
   Typography,
   IconButton,
   Drawer as MuiDrawer,
   List,
   Divider,
   Container,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
 } from "@mui/material";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from "@mui/icons-material/Login";
-import PersonIcon from "@mui/icons-material/Person";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
-import MenuIcon from "@mui/icons-material/Menu";
-import Image from "next/image";
+import {
+  ChevronLeft as ChevronLeftIcon,
+  Logout as LogoutIcon,
+  LockOpen as LockOpenIcon,
+  Menu as MenuIcon,
+  Person as PersonIcon,
+} from "@mui/icons-material";
 import Link from "next/link";
 
 const drawerWidth = 240;
@@ -95,7 +97,17 @@ const Layout = ({ children }) => {
         </Toolbar>
         <Divider />
         <List component="nav">
+          <ListItemButton>
+            <ListItemText>
+              <Link href="/posts">Posts</Link>
+            </ListItemText>
+          </ListItemButton>
           <Divider sx={{ my: 1 }} />
+          <ListItemButton>
+            <ListItemText>
+              <Link href="/networks">Networks</Link>
+            </ListItemText>
+          </ListItemButton>
         </List>
       </Drawer>
       <Box component="main" sx={{ mt: 8, height: "100vh", overflow: "auto" }}>
