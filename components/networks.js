@@ -1,6 +1,7 @@
 import Twitter from "./twitter";
 import Reddit from "./reddit";
 import LinkedIn from "./linkedin";
+import Notion from "./notion";
 import { useQuery } from "react-query";
 import { LoadingButton } from "@mui/lab";
 import { Grid } from "@mui/material";
@@ -27,6 +28,9 @@ const Networks = () => {
       </Grid>
       <Grid item>
         <LinkedIn />
+      </Grid>
+      <Grid item>
+        <Notion />
       </Grid>
     </Grid>
   );
